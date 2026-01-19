@@ -257,7 +257,7 @@ async def get_icc_complaints(admin: dict = Depends(lambda: get_current_admin(adm
 async def update_icc_complaint_status(
     complaint_id: str,
     status_update: StatusUpdate,
-    admin: dict = Depends(lambda creds: get_current_admin(creds, "icc"))
+    admin: dict = Depends(lambda: get_current_admin(admin_type="icc"))
 ):
     complaint = await db.icc_complaints.find_one({"id": complaint_id}, {"_id": 0})
     if not complaint:
