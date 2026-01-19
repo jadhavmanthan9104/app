@@ -194,7 +194,7 @@ async def create_lab_complaint(complaint: LabComplaintCreate):
     return {"message": "Complaint submitted successfully", "complaint_id": complaint_id}
 
 @api_router.get("/lab-complaints", response_model=List[Complaint])
-async def get_lab_complaints(admin: dict = Depends(lambda: get_current_admin(admin_type="lab"))):
+async def get_lab_complaints(admin: dict = Depends(get_current_lab_admin)):
     complaints = await db.lab_complaints.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
     
     for c in complaints:
