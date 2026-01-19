@@ -207,7 +207,7 @@ async def get_lab_complaints(admin: dict = Depends(get_current_lab_admin)):
 async def update_lab_complaint_status(
     complaint_id: str,
     status_update: StatusUpdate,
-    admin: dict = Depends(lambda: get_current_admin(admin_type="lab"))
+    admin: dict = Depends(get_current_lab_admin)
 ):
     complaint = await db.lab_complaints.find_one({"id": complaint_id}, {"_id": 0})
     if not complaint:
