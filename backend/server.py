@@ -250,7 +250,7 @@ async def create_icc_complaint(complaint: ICCComplaintCreate):
     return {"message": "Complaint submitted successfully", "complaint_id": complaint_id}
 
 @api_router.get("/icc-complaints", response_model=List[Complaint])
-async def get_icc_complaints(admin: dict = Depends(lambda: get_current_admin(admin_type="icc"))):
+async def get_icc_complaints(admin: dict = Depends(get_current_icc_admin)):
     complaints = await db.icc_complaints.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
     
     for c in complaints:
